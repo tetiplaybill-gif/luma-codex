@@ -21,7 +21,7 @@ function resolveDesktop({ platform = process.platform, env = process.env, home =
   }
   const profile = env.MAID_PROFILE_DIR || (platform === 'win32'
     ? path.win32.join(env.LOCALAPPDATA || path.win32.join(home, 'AppData', 'Local'), 'Luma Codex Theme', 'profile')
-    : path.join(home, 'Library', 'Application Support', 'Luma Codex Theme', 'profile'));
+    : path.posix.join(home, 'Library', 'Application Support', 'Luma Codex Theme', 'profile'));
   return { app, profile };
 }
 module.exports = { resolveDesktop, queryWindowsPackage };
