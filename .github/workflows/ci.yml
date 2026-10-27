@@ -5,6 +5,7 @@ permissions:
 jobs:
   test:
     strategy:
+      fail-fast: false
       matrix:
         os: [macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
@@ -18,7 +19,16 @@ jobs:
           git -C source checkout --detach FETCH_HEAD
       - name: Run dependency-free tests
         working-directory: source
-        run: node --test tests/platform.test.cjs tests/bundle.test.cjs tests/ipc.test.cjs tests/chromium-pipe.test.cjs
+        shell: bash
+        run: |
+          set +e
+          node --test tests/platform.test.cjs tests/bundle.test.cjs tests/ipc.test.cjs tests/chromium-pipe.test.cjs > "$RUNNER_TEMP/luma-test.log" 2>&1
+          result=$?
+          cat "$RUNNER_TEMP/luma-test.log"
+          if [ "$result" -ne 0 ]; then
+            node -e 'const fs=require("node:fs");const s=fs.readFileSync(process.argv[1],"utf8").slice(-8000);console.log("::error::"+s.replace(/%/g,"%25").replace(/\r/g,"").replace(/\n/g,"%0A"))' "$RUNNER_TEMP/luma-test.log"
+            exit "$result"
+          fi
       - name: Parse the Windows launcher
         if: runner.os == 'Windows'
         working-directory: source

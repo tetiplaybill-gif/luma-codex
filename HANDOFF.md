@@ -13,7 +13,7 @@ macOS 跨平台源码启动器已在真实客户端的 Codex 视图新窗口验�
 - `start-macos.command`, `start-windows.cmd`, `start-windows.ps1`：对应系统入口，不自动安装 Git、Node 或客户端。
 - `src/theme.*`, `assets/`, `licenses/`：原主题和原创角色，宫殿与装饰保留上游 CC BY-NC-SA 4.0 条款。
 - `skills/luma-desktop-theme/`, `.codex-plugin/`, `.agents/plugins/`：待在实际 Codex 插件安装流程中验证的 skill 和清单。
-- `tests/`, `.github/workflows/ci.yml`：依赖已有 Node / Git 的测试；CI 未运行前不要报告 Windows CI 为通过。
+- `tests/`, `.github/workflows/ci.yml`：依赖已有 Node / Git 的测试；CI 的实时结果以 GitHub 对应提交为准；模拟测试不证明 Windows 官方客户端可用。
 
 ## Next steps
 1. 检查目标 GitHub 仓库的写入权限；上传前执行 `git status --short`，仅暂存本项目文件，检查敏感数据后提交并推送。
