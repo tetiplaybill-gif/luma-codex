@@ -1,0 +1,8 @@
+{
+  "name": "luma-codex-theme",
+  "version": "0.2.0",
+  "private": true,
+  "description": "A local desktop theme for the new ChatGPT app",
+  "engines": { "node": ">=18" },
+  "scripts": { "test": "node --test tests/platform.test.cjs tests/bundle.test.cjs tests/ipc.test.cjs tests/chromium-pipe.test.cjs" }
+}

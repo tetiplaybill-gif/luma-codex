@@ -1,0 +1,7 @@
+{
+  "name": "luma-desktop-theme",
+  "version": "0.2.0",
+  "description": "Launch a themed new ChatGPT desktop window using locally bundled artwork.",
+  "skills": "./skills/",
+  "interface": { "displayName": "Luma Desktop Theme", "shortDescription": "Launch the desktop companion theme" }
+}

@@ -1,0 +1,30 @@
+name: Cross-platform source checks
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Fetch public source at the event commit
+        shell: bash
+        run: |
+          git init source
+          git -C source remote add origin "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git"
+          git -C source fetch --depth 1 origin "$GITHUB_SHA"
+          git -C source checkout --detach FETCH_HEAD
+      - name: Run dependency-free tests
+        working-directory: source
+        run: node --test tests/platform.test.cjs tests/bundle.test.cjs tests/ipc.test.cjs tests/chromium-pipe.test.cjs
+      - name: Parse the Windows launcher
+        if: runner.os == 'Windows'
+        working-directory: source
+        shell: pwsh
+        run: |
+          $tokens = $null
+          $errors = $null
+          [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path ./start-windows.ps1), [ref]$tokens, [ref]$errors) | Out-Null
+          if ($errors.Count -gt 0) { $errors | ForEach-Object { Write-Error $_ }; exit 1 }

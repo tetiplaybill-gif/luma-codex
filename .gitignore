@@ -1,0 +1,9 @@
+node_modules/
+*.log
+.DS_Store
+.env
+.env.*
+coverage/
+profile/
+profiles/
+*.code-workspace

@@ -1,0 +1,12 @@
+{
+  "name": "luma-codex",
+  "interface": { "displayName": "Luma Codex" },
+  "plugins": [
+    {
+      "name": "luma-desktop-theme",
+      "source": { "source": "local", "path": "./" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Productivity"
+    }
+  ]
+}
